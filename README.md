@@ -1,16 +1,3 @@
 # voice_assistant
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![InShot_20230821_232509810](https://github.com/moury12/voice_assistant_to_do_app/assets/107296533/f489e0af-7571-4986-a4c3-a4407b9ab0e3)
