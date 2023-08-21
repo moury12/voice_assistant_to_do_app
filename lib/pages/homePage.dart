@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
@@ -23,7 +24,8 @@ class _HomeState extends State<Home> {
   String recognizedWords = '';
   String generatedContent = '';
   String generatedImageUrl = '';
-
+int start =200;
+int delay =200;
   @override
   void initState() {
     super.initState();
@@ -131,7 +133,14 @@ class _HomeState extends State<Home> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-            Center(child: Image.network('https://cdn-icons-png.flaticon.com/512/201/201634.png',height: 100,width: 100,)),
+            ZoomIn(child: Center(child: Image.network(
+              'https://cdn-icons-png.flaticon.com/512/201/201634.png',height: 100,width: 100,
+            errorBuilder: (context, error, stackTrace) {
+              return Icon(Icons.account_circle,size: 120, color: Colors.cyan.shade200,);
+            },
+            //loadingBuilder: (context, child, loadingProgress) => Icon(Icons.account_circle,size: 120, color: Colors.cyan.shade200,),
+            )
+            )),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 19).copyWith(bottom: 10),
             child:generatedImageUrl.isEmpty? Container(alignment: Alignment.center,
@@ -145,20 +154,24 @@ class _HomeState extends State<Home> {
               border: Border.all(color: Colors.grey,width: 1),borderRadius: BorderRadius.vertical(top: Radius.circular(20),bottom: Radius.circular(20),).copyWith(topLeft: Radius.zero)
             ),):Image.network(generatedImageUrl),
           ),
-             Visibility(visible: generatedContent.isEmpty&& generatedImageUrl.isEmpty,
-               child: Column(
-                 children: [
-                   Align(alignment: Alignment.centerLeft,
-                     child: Padding(
-                       padding: const EdgeInsets.only(left: 18.0),
-                       child: Text(
-                         'Here are some features',style: GoogleFonts.quattrocento(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.lightBlue.shade900),),
+             FadeInRight(
+               child: Visibility(visible: generatedContent.isEmpty&& generatedImageUrl.isEmpty,
+                 child: Column(
+                   children: [
+                     Align(alignment: Alignment.centerLeft,
+                       child: Padding(
+                         padding: const EdgeInsets.only(left: 18.0),
+                         child: Text(
+                           'Here are some features',style: GoogleFonts.quattrocento(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.lightBlue.shade900),),
+                       ),
                      ),
-                   ),
-                   Features(title: 'ChatGPT', text: 'A smarter way to stay organized and informed with ChatGPT', color: Colors.cyan.shade50),
-                   Features(title: 'Generate an image ', text: 'Evie can quickly create image and draw them on screen', color: Colors.indigo.shade50),
-                   Features(title: 'View task list', text: 'Evie easily manages and organizes all of your', color: Colors.lightBlue.shade50),
-                 ],
+                     SlideInLeft(delay: Duration(milliseconds: start+delay),
+                         child: Features(title: 'ChatGPT', text: 'A smarter way to stay organized and informed with ChatGPT', color: Colors.cyan.shade50)),
+                     SlideInLeft(delay: Duration(milliseconds: start+2*delay),
+                         child: Features(title: 'Generate an image ', text: 'Evie can quickly create image and draw them on screen', color: Colors.indigo.shade50)),
+                     SlideInLeft(child: Features(title: 'View task list', text: 'Evie easily manages and organizes all of your', color: Colors.lightBlue.shade50)),
+                   ],
+                 ),
                ),
              )
 
@@ -178,17 +191,21 @@ class _HomeState extends State<Home> {
                 child: Text('$recognizedWords',maxLines: 1,overflow: TextOverflow.ellipsis,),
               ),
             ):SizedBox.shrink(),SizedBox(width: 15,),
-              FloatingActionButton.small(onPressed: () {
+              ZoomIn(delay: Duration(milliseconds: start+2*delay),
+                child: FloatingActionButton.small(onPressed: () {
 
 stopTts();
-              },heroTag: 12,
-              child: Icon(isPlaying==true?IconlyLight.volumeOff:IconlyLight.volumeUp,color: Colors.black,),
-              backgroundColor: Colors.grey.shade200,), SizedBox(width: 15,),
-              FloatingActionButton.small(
-                onPressed: isListening ? _stopListening : _startListening,
-                heroTag: 'voiceButton',
-                child: Icon(isListening ? Icons.stop : IconlyLight.voice, color: Colors.black),
-                backgroundColor:  Colors.red.shade50 ,
+                },heroTag: 12,
+                child: Icon(isPlaying==true?IconlyLight.volumeOff:IconlyLight.volumeUp,color: Colors.black,),
+                backgroundColor: Colors.grey.shade200,),
+              ), SizedBox(width: 15,),
+              ZoomIn(delay: Duration(milliseconds: start+2*delay),
+                child: FloatingActionButton.small(
+                  onPressed: isListening ? _stopListening : _startListening,
+                  heroTag: 'voiceButton',
+                  child: Icon(isListening ? Icons.stop : IconlyLight.voice, color: Colors.black),
+                  backgroundColor:  Colors.red.shade50 ,
+                ),
               ),
 
             ],
